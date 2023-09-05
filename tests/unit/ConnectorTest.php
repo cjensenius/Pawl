@@ -3,14 +3,15 @@
 use PHPUnit\Framework\TestCase;
 use Ratchet\Client\Connector;
 use React\EventLoop\Loop;
-use React\Promise\RejectedPromise;
+use React\Promise\Internal\RejectedPromise;
 use React\Promise\Promise;
 
 class ConnectorTest extends TestCase
 {
     public function testConstructWithoutLoopAssignsLoopAutomatically()
     {
-        $factory = new Connector();
+        $loop = React\EventLoop\Factory::create();
+        $factory = new Connector($loop);
 
         $ref = new \ReflectionProperty($factory, '_loop');
         $ref->setAccessible(true);
